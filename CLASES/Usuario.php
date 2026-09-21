@@ -41,5 +41,46 @@ class Usuario {
         $stmt = $pdo->prepare($sql);
         $stmt->execute(['id' => $idUsuario]);
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
+        
+    }
+        public static function emailExiste(PDO $pdo, string $email): bool {
+        $stmt = $pdo->prepare("SELECT 1 FROM usuario WHERE email = :email");
+        $stmt->execute(['email' => $email]);
+        return (bool) $stmt->fetchColumn();
+    }
+
+    public static function registrarCliente(PDO $pdo, string $nombre, string $apellido, string $email, string $password): int {
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+
+        $pdo->beginTransaction();
+        try {
+            $stmt = $pdo->prepare(
+                "INSERT INTO usuario (nombre, apellido, email, contrasena, estado)
+                 VALUES (:nombre, :apellido, :email, :contrasena, 'Activo')"
+            );
+            $stmt->execute([
+                'nombre'     => $nombre,
+                'apellido'   => $apellido,
+                'email'      => $email,
+                'contrasena' => $hash,
+            ]);
+            $idUsuario = (int) $pdo->lastInsertId();
+
+            $stmt = $pdo->prepare("SELECT idRol FROM roles WHERE nombreRol = 'Cliente'");
+            $stmt->execute();
+            $idRol = $stmt->fetchColumn();
+            if (!$idRol) {
+                throw new \RuntimeException("No existe el rol Cliente");
+            }
+
+            $stmt = $pdo->prepare("INSERT INTO roles_usuarios (idUsuario, idRol) VALUES (:u, :r)");
+            $stmt->execute(['u' => $idUsuario, 'r' => $idRol]);
+
+            $pdo->commit();
+            return $idUsuario;
+        } catch (\Throwable $e) {
+            $pdo->rollBack();
+            throw $e;
+        }
     }
 }
