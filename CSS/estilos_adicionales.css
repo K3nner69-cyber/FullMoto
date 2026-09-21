@@ -1,0 +1,87 @@
+/* ---- Añadir esto a tu estilos.css existente ---- */
+
+.header-catalogo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.btn-nuevo {
+    background-color: #2a7a2a;
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.producto-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.volver {
+    display: inline-block;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: #333;
+}
+
+.producto-detalle {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.btn-editar {
+    display: inline-block;
+    margin-top: 16px;
+    background-color: #2a5d9f;
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+}
+
+.form-producto {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+}
+
+.form-producto label {
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+.form-producto input,
+.form-producto textarea,
+.form-producto select {
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.form-producto button {
+    margin-top: 20px;
+    background-color: #2a7a2a;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+}
